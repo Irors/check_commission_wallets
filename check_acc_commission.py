@@ -27,6 +27,7 @@ with open("ftm_api_key.txt") as ftm_api:
 with open("polygon_api_key.txt") as polygon_api:
     polygon_key = polygon_api.readline()
 
+contract_addr = {"0xaa9c15cd603428ca8ddd45e933f8efe3afbcc173"}
 
 for adresss in wallets:
     #bnb = eth = ftm = arb = polygon = avax = 0
@@ -65,7 +66,9 @@ for adresss in wallets:
     ###
     try:
         for acc in response_bsc.json()['result']:
-            bnb += int(acc['gasUsed']) * int(acc['gasPrice']) / 10**18 + int(acc['value']) / 10 ** 18
+            if int(acc['nonce']) < 500:
+                if acc['to'] not in contract_addr:
+                    bnb += int(acc['gasUsed']) * int(acc['gasPrice']) / 10**18 + int(acc['value']) / 10 ** 18
         print(bnb, "потрачено bnb")
     except:
         print("0 транзакций")
@@ -73,7 +76,9 @@ for adresss in wallets:
     ###
     try:
         for acc in response_eth.json()['result']:
-            eth = int(acc['gasPrice']) * int(acc['gasUsed']) / 10**18 + int(acc['value']) / 10 ** 18
+            if int(acc['nonce']) < 500:
+                if acc['to'] not in contract_addr:
+                    eth += (int(acc['gasPrice']) * int(acc['gasUsed']) / 10**18) + (int(acc['value']) / 10 ** 18)
         print(eth, "потрачено eth")
     except:
         print("0 транзакций")
@@ -81,7 +86,9 @@ for adresss in wallets:
     ###
     try:
         for acc in response_ftm.json()['result']:
-            ftm = int(acc['gasPrice']) * int(acc['gasUsed']) / 10**18 + int(acc['value']) / 10 ** 18
+            if int(acc['nonce']) < 500:
+                if acc['to'] not in contract_addr:
+                    ftm += (int(acc['gasPrice']) * int(acc['gasUsed']) / 10**18) + (int(acc['value']) / 10 ** 18)
         print(ftm, "потрачено ftm")
     except:
         print("0 транзакций")
@@ -90,7 +97,9 @@ for adresss in wallets:
     ###
     try:
         for acc in response_arb.json()['result']:
-            arb = int(acc['gasPriceBid']) * int(acc['gasUsed']) / 10 ** 18 + int(acc['value']) / 10 ** 18
+            if int(acc['nonce']) < 500:
+                if acc['to'] not in contract_addr:
+                    arb += (int(acc['gasPriceBid']) * int(acc['gasUsed']) / 10 ** 18) + (int(acc['value']) / 10 ** 18)
         print(arb, "потрачено arb_eth")
     except:
         print("0 транзакций")
@@ -99,7 +108,9 @@ for adresss in wallets:
     ###
     try:
         for acc in response_polygon.json()['result']:
-            polygon = int(acc['gasPrice']) * int(acc['gasUsed']) / 10**18 + int(acc['value']) / 10 ** 18
+            if int(acc['nonce']) < 500:
+                if acc['to'] not in contract_addr:
+                    polygon += (int(acc['gasPrice']) * int(acc['gasUsed']) / 10**18) + (int(acc['value']) / 10 ** 18)
         print(polygon, "потрачено matic")
     except:
         print("0 транзакций")
@@ -107,7 +118,9 @@ for adresss in wallets:
     ###
     try:
         for acc in response_avax.json()['result']:
-            avax = int(acc['gasPrice']) * int(acc['gasUsed']) / 10**18 + int(acc['value']) / 10 ** 18
+            if int(acc['nonce']) < 500:
+                if acc['to'] not in contract_addr:
+                    avax += ((int(acc['gasPrice']) * int(acc['gasUsed'])) / 10**18) + (int(acc['value']) / 10 ** 18)
         print(avax, "потрачено avax")
     except:
         print("0 транзакций")
